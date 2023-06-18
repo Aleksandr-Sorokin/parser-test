@@ -1,10 +1,13 @@
 package ru.sorokin.parsertest.controllers;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+import ru.sorokin.parsertest.service.ParsService;
 
 import java.util.List;
 
@@ -12,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ControllerPars {
     private final WebClient webClient;
+    private final ParsService parsService;
 
     @GetMapping("/novo")
     public String getParsNovo() {
@@ -25,6 +29,11 @@ public class ControllerPars {
         outResponse = response.block();
 
         return outResponse;
+    }
+
+    @GetMapping("/novo/features")
+    public String getFeatures() {
+        return parsService.parseFeatures();
     }
 
 }
